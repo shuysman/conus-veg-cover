@@ -29,7 +29,7 @@ names(stack) <- c("aet_annual", "cwd_annual")
 ##         "aet_fall", "cwd_fall"
 ## )
 
-stack_df <- as.data.frame(stack, na.rm = FALSE)
+stack_df <- as.data.frame(stack)
 
 head(stack_df)
 
@@ -51,13 +51,8 @@ saveRDS(mod1, "mod1_annual.RDS", compress = TRUE)
 
 mod1 <- readRDS("mod1_annual.RDS")
 
+vec <- rep(NA, ncell(aet_annual))
+vec[complete.cases(as.data.frame(aet_annual, na.rm = FALSE))] = mod1$classification
+clustering = rast(aet_annual, nlyrs = 1, vals = vec) 
 
-new_rast <- rast(matrix(mod1$classification, nrow = nrow(aet_annual), ncol = ncol(aet_annual)),
-  #nrows = nrow(aet_annual),
-  #ncols = ncol(aet_annual),
-  extent = ext(aet_annual),
-  crs = crs(aet_annual))
-  #resolution = res(aet_annual))
-
-
-plot(new_rast)
+plot(clustering)
