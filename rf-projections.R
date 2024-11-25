@@ -2,6 +2,7 @@ library(terra)
 library(ranger)
 library(tidyverse)
 library(tidyterra)
+library(FedData)
 
 #### RCP8.5 Projections
 rf_mod <- readRDS("./rf_mod.RDS")
@@ -92,8 +93,13 @@ stack <- mask(stack, dev_mask, inverse = TRUE)
 pr <- function(mdl, ...) predict(mdl, ...)$predictions
 pred <- predict(stack, rf_mod, fun = pr, na.rm = TRUE)
 
+names(pred) = c("Class")
+
+cols <- dplyr::filter(pal_nlcd(), pal_nlcd()$Class %in% cats(pred)[[1]]$class)
+
 ggplot()+
-  geom_spatraster(data = pred)
+  geom_spatraster(data = pred) +
+  scale_fill_manual(values = cols$Color)
 
 ggplot() +
         geom_spatraster(data = mask(nlcd_2023, dev_mask, inverse = TRUE))
@@ -101,6 +107,7 @@ ggplot() +
 ### Area of each category
 expanse(pred, unit = "km", byValue = TRUE)
 expanse(mask(nlcd_2023, dev_mask, inverse = TRUE), unit = "km", byValue = TRUE)
+
 
 
 ### Code to use if you don't run terra::predict, i.e., if you need xy values if location is included as a predictor and don't want ot make a layer for the spatraster stack
