@@ -30,6 +30,8 @@ soil_water_spring <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_
 soil_water_summer <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_layers/soil_water/historical/V_1_5_summer_gridmet_historical_soil_water_1980_1999_summer_means_cropped_units_mm.tif")
 soil_water_fall <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_layers/soil_water/historical/V_1_5_fall_gridmet_historical_soil_water_1980_1999_fall_means_cropped_units_mm.tif")
 
+soil_whc <- rast("./soil_whc_conus_1km.tif")
+
 nlcd <- rast("./nlcd_resampled_1km_1985.tif")
 
 nlcd <- nlcd %>%
@@ -46,6 +48,7 @@ stack <- c(aet_winter, cwd_winter,
            runoff_summer, runoff_fall,
            soil_water_winter, soil_water_spring,
            soil_water_summer, soil_water_fall,
+           soil_whc,
            nlcd
            )
 
@@ -60,9 +63,10 @@ names(stack) <- c("aet_winter", "cwd_winter",
                   "runoff_summer", "runoff_fall",
                   "soil_water_winter", "soil_water_spring",
                   "soil_water_summer", "soil_water_fall",
+                  "soil_whc",
                   "nlcd")
 
-data <- as.data.frame(stack)
+data <- as.data.frame(stack, xy = FALSE) ## Can use xy = TRUE if you want to include location as predictor
 
 data <- data[complete.cases(data),]
 
@@ -70,12 +74,26 @@ data$nlcd <- factor(data$nlcd)
 
 head(data)
 
-ind <- sample(2, nrow(data), replace = TRUE, prob = c(0.7, 0.3))
-train <- data[ind == 1,]
-test <- data[ind == 2,]
-
-rf_mod <- ranger(nlcd ~ ., data = train, 
-                 classif.learner = "oob", 
+rf_mod <- ranger(nlcd ~ .,
+                 data = data, 
                  num.trees = 500,
-                 min.n = 1)
+                 splitrule = "gini",
+                 max.depth = 0,
+                 replace = TRUE,
+                 probability = TRUE,
+                 importance = "impurity",
+                 write.forest = TRUE,
+                 num.threads = 12)
 summary(rf_mod)
+
+importance(rf_mod)
+
+print(rf_mod$confusion.matrix)
+
+saveRDS(rf_mod, file = "rf_mod.RDS", compress = TRUE)
+
+
+###library(pROC)
+
+## https://stackoverflow.com/questions/60973549/roc-curve-ranger
+##ROC_ranger <- pROC::roc(probabilities$BiClass, probabilities$`1`)
