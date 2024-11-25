@@ -92,15 +92,15 @@ stack <- mask(stack, dev_mask, inverse = TRUE)
 pr <- function(mdl, ...) predict(mdl, ...)$predictions
 pred <- predict(stack, rf_mod, fun = pr, na.rm = TRUE)
 
-plot(pred)
-
 ggplot()+
   geom_spatraster(data = pred)
 
+ggplot() +
+        geom_spatraster(data = mask(nlcd_2023, dev_mask, inverse = TRUE))
 
 ### Area of each category
 expanse(pred, unit = "km", byValue = TRUE)
-
+expanse(mask(nlcd_2023, dev_mask, inverse = TRUE), unit = "km", byValue = TRUE)
 
 
 ### Code to use if you don't run terra::predict, i.e., if you need xy values if location is included as a predictor and don't want ot make a layer for the spatraster stack
