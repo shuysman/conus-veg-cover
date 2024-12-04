@@ -17,26 +17,10 @@ aet_spring <- rast("./data/summary_layers/AET/rcp85/ensembles/ensemble_2070_2099
 aet_summer <- rast("./data/summary_layers/AET/rcp85/ensembles/ensemble_2070_2099_summer_rcp85_AET_units_mm.tif")
 aet_fall <- rast("./data/summary_layers/AET/rcp85/ensembles/ensemble_2070_2099_fall_rcp85_AET_units_mm.tif")
 
-cwd_winter <- rast("./data/summary_layers/Deficit/rcp85/ensembles/ensemble_2070_2099_winter_rcp85_Deficit_units_mm.tif")
-cwd_spring <- rast("./data/summary_layers/Deficit/rcp85/ensembles/ensemble_2070_2099_spring_rcp85_Deficit_units_mm.tif")
-cwd_summer <- rast("./data/summary_layers/Deficit/rcp85/ensembles/ensemble_2070_2099_summer_rcp85_Deficit_units_mm.tif")
-cwd_fall <- rast("./data/summary_layers/Deficit/rcp85/ensembles/ensemble_2070_2099_fall_rcp85_Deficit_units_mm.tif")
-
-accumswe <- rast("./data/summary_layers/accumswe/rcp85/ensembles/ensemble_2070_2099_annual_rcp85_accumswe_units_mm.tif")
-
-rain_winter <- rast("./data/summary_layers/rain/rcp85/ensembles/ensemble_2070_2099_winter_rcp85_rain_units_mm.tif")
-rain_spring <- rast("./data/summary_layers/rain/rcp85/ensembles/ensemble_2070_2099_spring_rcp85_rain_units_mm.tif")
-rain_summer <- rast("./data/summary_layers/rain/rcp85/ensembles/ensemble_2070_2099_summer_rcp85_rain_units_mm.tif")
-rain_fall <- rast("./data/summary_layers/rain/rcp85/ensembles/ensemble_2070_2099_fall_rcp85_rain_units_mm.tif")
-
-runoff_winter <- rast("./data/summary_layers/runoff/rcp85/ensembles/ensemble_2070_2099_winter_rcp85_runoff_units_mm.tif")
-runoff_spring <- rast("./data/summary_layers/runoff/rcp85/ensembles/ensemble_2070_2099_spring_rcp85_runoff_units_mm.tif")
-runoff_summer <- rast("./data/summary_layers/runoff/rcp85/ensembles/ensemble_2070_2099_summer_rcp85_runoff_units_mm.tif")
-runoff_fall <- rast("./data/summary_layers/runoff/rcp85/ensembles/ensemble_2070_2099_fall_rcp85_runoff_units_mm.tif")#### RCP8.5 Projections
-aet_winter <- rast("./data/summary_layers/AET/rcp85/ensembles/ensemble_2070_2099_winter_rcp85_AET_units_mm.tif") #
-aet_spring <- rast("./data/summary_layers/AET/rcp85/ensembles/ensemble_2070_2099_spring_rcp85_AET_units_mm.tif")
-aet_summer <- rast("./data/summary_layers/AET/rcp85/ensembles/ensemble_2070_2099_summer_rcp85_AET_units_mm.tif")
-aet_fall <- rast("./data/summary_layers/AET/rcp85/ensembles/ensemble_2070_2099_fall_rcp85_AET_units_mm.tif")
+pet_winter <- rast("./data/summary_layers/PET/rcp85/ensembles/ensemble_2070_2099_winter_rcp85_PET_units_mm.tif")
+pet_spring <- rast("./data/summary_layers/PET/rcp85/ensembles/ensemble_2070_2099_spring_rcp85_PET_units_mm.tif")
+pet_summer <- rast("./data/summary_layers/PET/rcp85/ensembles/ensemble_2070_2099_summer_rcp85_PET_units_mm.tif")
+pet_fall <- rast("./data/summary_layers/PET/rcp85/ensembles/ensemble_2070_2099_fall_rcp85_PET_units_mm.tif")
 
 cwd_winter <- rast("./data/summary_layers/Deficit/rcp85/ensembles/ensemble_2070_2099_winter_rcp85_Deficit_units_mm.tif")
 cwd_spring <- rast("./data/summary_layers/Deficit/rcp85/ensembles/ensemble_2070_2099_spring_rcp85_Deficit_units_mm.tif")
