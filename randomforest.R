@@ -96,7 +96,7 @@ rf_mod <- ranger(nlcd ~ .,
                  probability = FALSE,
                  importance = "impurity",
                  write.forest = TRUE,
-                 num.threads = 64)
+                 num.threads = 128)
 summary(rf_mod)
 
 print(rf_mod)
