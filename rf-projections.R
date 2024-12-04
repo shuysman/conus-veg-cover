@@ -7,76 +7,87 @@ library(FedData)
 #### RCP8.5 Projections
 rf_mod <- readRDS("./rf_mod.RDS")
 
-nlcd_2023 <- rast("./nlcd_resampled_1km_2023.tif")
+nlcd_2019 <- rast("./nlcd_resampled_1km_2019.tif")
 ### Developed land types, or other unusable land types to mask from predictions.
-dev_mask <- filter(nlcd_2023, values(nlcd_2023) %in% c(11, 21, 22, 23, 24, 81, 82))
+dev_mask <- filter(nlcd_2019, values(nlcd_2019) %in% c(11, 21, 22, 23, 24, 81, 82))
 
 
-aet_winter <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_layers/AET/rcp85/ensembles/ensemble_2070_2099_winter_rcp85_AET_units_mm.tif")
-aet_spring <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_layers/AET/rcp85/ensembles/ensemble_2070_2099_spring_rcp85_AET_units_mm.tif")
-aet_summer <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_layers/AET/rcp85/ensembles/ensemble_2070_2099_summer_rcp85_AET_units_mm.tif")
-aet_fall <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_layers/AET/rcp85/ensembles/ensemble_2070_2099_fall_rcp85_AET_units_mm.tif")
+aet_winter <- rast("./data/summary_layers/AET/rcp85/ensembles/ensemble_2070_2099_winter_rcp85_AET_units_mm.tif")
+aet_spring <- rast("./data/summary_layers/AET/rcp85/ensembles/ensemble_2070_2099_spring_rcp85_AET_units_mm.tif")
+aet_summer <- rast("./data/summary_layers/AET/rcp85/ensembles/ensemble_2070_2099_summer_rcp85_AET_units_mm.tif")
+aet_fall <- rast("./data/summary_layers/AET/rcp85/ensembles/ensemble_2070_2099_fall_rcp85_AET_units_mm.tif")
 
-cwd_winter <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_layers/Deficit/rcp85/ensembles/ensemble_2070_2099_winter_rcp85_Deficit_units_mm.tif")
-cwd_spring <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_layers/Deficit/rcp85/ensembles/ensemble_2070_2099_spring_rcp85_Deficit_units_mm.tif")
-cwd_summer <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_layers/Deficit/rcp85/ensembles/ensemble_2070_2099_summer_rcp85_Deficit_units_mm.tif")
-cwd_fall <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_layers/Deficit/rcp85/ensembles/ensemble_2070_2099_fall_rcp85_Deficit_units_mm.tif")
+cwd_winter <- rast("./data/summary_layers/Deficit/rcp85/ensembles/ensemble_2070_2099_winter_rcp85_Deficit_units_mm.tif")
+cwd_spring <- rast("./data/summary_layers/Deficit/rcp85/ensembles/ensemble_2070_2099_spring_rcp85_Deficit_units_mm.tif")
+cwd_summer <- rast("./data/summary_layers/Deficit/rcp85/ensembles/ensemble_2070_2099_summer_rcp85_Deficit_units_mm.tif")
+cwd_fall <- rast("./data/summary_layers/Deficit/rcp85/ensembles/ensemble_2070_2099_fall_rcp85_Deficit_units_mm.tif")
 
-accumswe <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_layers/accumswe/rcp85/ensembles/ensemble_2070_2099_annual_rcp85_accumswe_units_mm.tif")
+accumswe <- rast("./data/summary_layers/accumswe/rcp85/ensembles/ensemble_2070_2099_annual_rcp85_accumswe_units_mm.tif")
 
-rain_winter <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_layers/rain/rcp85/ensembles/ensemble_2070_2099_winter_rcp85_rain_units_mm.tif")
-rain_spring <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_layers/rain/rcp85/ensembles/ensemble_2070_2099_spring_rcp85_rain_units_mm.tif")
-rain_summer <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_layers/rain/rcp85/ensembles/ensemble_2070_2099_summer_rcp85_rain_units_mm.tif")
-rain_fall <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_layers/rain/rcp85/ensembles/ensemble_2070_2099_fall_rcp85_rain_units_mm.tif")
+rain_winter <- rast("./data/summary_layers/rain/rcp85/ensembles/ensemble_2070_2099_winter_rcp85_rain_units_mm.tif")
+rain_spring <- rast("./data/summary_layers/rain/rcp85/ensembles/ensemble_2070_2099_spring_rcp85_rain_units_mm.tif")
+rain_summer <- rast("./data/summary_layers/rain/rcp85/ensembles/ensemble_2070_2099_summer_rcp85_rain_units_mm.tif")
+rain_fall <- rast("./data/summary_layers/rain/rcp85/ensembles/ensemble_2070_2099_fall_rcp85_rain_units_mm.tif")
 
-runoff_winter <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_layers/runoff/rcp85/ensembles/ensemble_2070_2099_winter_rcp85_runoff_units_mm.tif")
-runoff_spring <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_layers/runoff/rcp85/ensembles/ensemble_2070_2099_spring_rcp85_runoff_units_mm.tif")
-runoff_summer <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_layers/runoff/rcp85/ensembles/ensemble_2070_2099_summer_rcp85_runoff_units_mm.tif")
-runoff_fall <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_layers/runoff/rcp85/ensembles/ensemble_2070_2099_fall_rcp85_runoff_units_mm.tif")#### RCP8.5 Projections
-aet_winter <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_layers/AET/rcp85/ensembles/ensemble_2070_2099_winter_rcp85_AET_units_mm.tif") #
-aet_spring <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_layers/AET/rcp85/ensembles/ensemble_2070_2099_spring_rcp85_AET_units_mm.tif")
-aet_summer <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_layers/AET/rcp85/ensembles/ensemble_2070_2099_summer_rcp85_AET_units_mm.tif")
-aet_fall <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_layers/AET/rcp85/ensembles/ensemble_2070_2099_fall_rcp85_AET_units_mm.tif")
+runoff_winter <- rast("./data/summary_layers/runoff/rcp85/ensembles/ensemble_2070_2099_winter_rcp85_runoff_units_mm.tif")
+runoff_spring <- rast("./data/summary_layers/runoff/rcp85/ensembles/ensemble_2070_2099_spring_rcp85_runoff_units_mm.tif")
+runoff_summer <- rast("./data/summary_layers/runoff/rcp85/ensembles/ensemble_2070_2099_summer_rcp85_runoff_units_mm.tif")
+runoff_fall <- rast("./data/summary_layers/runoff/rcp85/ensembles/ensemble_2070_2099_fall_rcp85_runoff_units_mm.tif")#### RCP8.5 Projections
+aet_winter <- rast("./data/summary_layers/AET/rcp85/ensembles/ensemble_2070_2099_winter_rcp85_AET_units_mm.tif") #
+aet_spring <- rast("./data/summary_layers/AET/rcp85/ensembles/ensemble_2070_2099_spring_rcp85_AET_units_mm.tif")
+aet_summer <- rast("./data/summary_layers/AET/rcp85/ensembles/ensemble_2070_2099_summer_rcp85_AET_units_mm.tif")
+aet_fall <- rast("./data/summary_layers/AET/rcp85/ensembles/ensemble_2070_2099_fall_rcp85_AET_units_mm.tif")
 
-cwd_winter <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_layers/Deficit/rcp85/ensembles/ensemble_2070_2099_winter_rcp85_Deficit_units_mm.tif")
-cwd_spring <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_layers/Deficit/rcp85/ensembles/ensemble_2070_2099_spring_rcp85_Deficit_units_mm.tif")
-cwd_summer <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_layers/Deficit/rcp85/ensembles/ensemble_2070_2099_summer_rcp85_Deficit_units_mm.tif")
-cwd_fall <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_layers/Deficit/rcp85/ensembles/ensemble_2070_2099_fall_rcp85_Deficit_units_mm.tif")
+cwd_winter <- rast("./data/summary_layers/Deficit/rcp85/ensembles/ensemble_2070_2099_winter_rcp85_Deficit_units_mm.tif")
+cwd_spring <- rast("./data/summary_layers/Deficit/rcp85/ensembles/ensemble_2070_2099_spring_rcp85_Deficit_units_mm.tif")
+cwd_summer <- rast("./data/summary_layers/Deficit/rcp85/ensembles/ensemble_2070_2099_summer_rcp85_Deficit_units_mm.tif")
+cwd_fall <- rast("./data/summary_layers/Deficit/rcp85/ensembles/ensemble_2070_2099_fall_rcp85_Deficit_units_mm.tif")
 
-accumswe <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_layers/accumswe/rcp85/ensembles/ensemble_2070_2099_annual_rcp85_accumswe_units_mm.tif")
+accumswe <- rast("./data/summary_layers/accumswe/rcp85/ensembles/ensemble_2070_2099_annual_rcp85_accumswe_units_mm.tif")
 
-rain_winter <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_layers/rain/rcp85/ensembles/ensemble_2070_2099_winter_rcp85_rain_units_mm.tif")
-rain_spring <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_layers/rain/rcp85/ensembles/ensemble_2070_2099_spring_rcp85_rain_units_mm.tif")
-rain_summer <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_layers/rain/rcp85/ensembles/ensemble_2070_2099_summer_rcp85_rain_units_mm.tif")
-rain_fall <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_layers/rain/rcp85/ensembles/ensemble_2070_2099_fall_rcp85_rain_units_mm.tif")
+rain_winter <- rast("./data/summary_layers/rain/rcp85/ensembles/ensemble_2070_2099_winter_rcp85_rain_units_mm.tif")
+rain_spring <- rast("./data/summary_layers/rain/rcp85/ensembles/ensemble_2070_2099_spring_rcp85_rain_units_mm.tif")
+rain_summer <- rast("./data/summary_layers/rain/rcp85/ensembles/ensemble_2070_2099_summer_rcp85_rain_units_mm.tif")
+rain_fall <- rast("./data/summary_layers/rain/rcp85/ensembles/ensemble_2070_2099_fall_rcp85_rain_units_mm.tif")
 
-runoff_winter <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_layers/runoff/rcp85/ensembles/ensemble_2070_2099_winter_rcp85_runoff_units_mm.tif")
-runoff_spring <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_layers/runoff/rcp85/ensembles/ensemble_2070_2099_spring_rcp85_runoff_units_mm.tif")
-runoff_summer <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_layers/runoff/rcp85/ensembles/ensemble_2070_2099_summer_rcp85_runoff_units_mm.tif")
-runoff_fall <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_layers/runoff/rcp85/ensembles/ensemble_2070_2099_fall_rcp85_runoff_units_mm.tif")
+runoff_winter <- rast("./data/summary_layers/runoff/rcp85/ensembles/ensemble_2070_2099_winter_rcp85_runoff_units_mm.tif")
+runoff_spring <- rast("./data/summary_layers/runoff/rcp85/ensembles/ensemble_2070_2099_spring_rcp85_runoff_units_mm.tif")
+runoff_summer <- rast("./data/summary_layers/runoff/rcp85/ensembles/ensemble_2070_2099_summer_rcp85_runoff_units_mm.tif")
+runoff_fall <- rast("./data/summary_layers/runoff/rcp85/ensembles/ensemble_2070_2099_fall_rcp85_runoff_units_mm.tif")
 
-soil_water_winter <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_layers/soil_water/rcp85/ensembles/ensemble_2070_2099_winter_rcp85_soil_water_units_mm.tif")
-soil_water_spring <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_layers/soil_water/rcp85/ensembles/ensemble_2070_2099_spring_rcp85_soil_water_units_mm.tif")
-soil_water_summer <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_layers/soil_water/rcp85/ensembles/ensemble_2070_2099_summer_rcp85_soil_water_units_mm.tif")
-soil_water_fall <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_layers/soil_water/rcp85/ensembles/ensemble_2070_2099_fall_rcp85_soil_water_units_mm.tif")
+soil_water_winter <- rast("./data/summary_layers/soil_water/rcp85/ensembles/ensemble_2070_2099_winter_rcp85_soil_water_units_mm.tif")
+soil_water_spring <- rast("./data/summary_layers/soil_water/rcp85/ensembles/ensemble_2070_2099_spring_rcp85_soil_water_units_mm.tif")
+soil_water_summer <- rast("./data/summary_layers/soil_water/rcp85/ensembles/ensemble_2070_2099_summer_rcp85_soil_water_units_mm.tif")
+soil_water_fall <- rast("./data/summary_layers/soil_water/rcp85/ensembles/ensemble_2070_2099_fall_rcp85_soil_water_units_mm.tif")
+
+soil_whc <- rast("./data/soil_whc_conus_1km.tif")
 
 stack <- c(aet_winter, cwd_winter,
            aet_spring, cwd_spring,
            aet_summer, cwd_summer,
            aet_fall, cwd_fall,
+           pet_winter,
+           pet_spring,
+           pet_summer,
+           pet_fall,
            accumswe,
            rain_winter, rain_spring,
            rain_summer, rain_fall,
            runoff_winter, runoff_spring,
            runoff_summer, runoff_fall,
            soil_water_winter, soil_water_spring,
-           soil_water_summer, soil_water_fall
+           soil_water_summer, soil_water_fall,
+           soil_whc
            )
 
 names(stack) <- c("aet_winter", "cwd_winter",
                   "aet_spring", "cwd_spring",
                   "aet_summer", "cwd_summer",
                   "aet_fall", "cwd_fall",
+                  "pet_winter",
+                  "pet_spring",
+                  "pet_summer",
+                  "pet_fall",
                   "accumswe",
                   "rain_winter", "rain_spring",
                   "rain_summer", "rain_fall",
@@ -106,7 +117,7 @@ ggplot() +
 
 ### Area of each category
 expanse(pred, unit = "km", byValue = TRUE)
-expanse(mask(nlcd_2023, dev_mask, inverse = TRUE), unit = "km", byValue = TRUE)
+expanse(mask(nlcd_2019, dev_mask, inverse = TRUE), unit = "km", byValue = TRUE)
 
 
 
