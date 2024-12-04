@@ -4,6 +4,11 @@ library(tidyverse)
 library(tidyterra)
 library(FedData)
 
+mid_century <- list(start_year = 2040, end_year = 2069)
+end_century <- list(start_year = 2070, end_year = 2099)
+
+scenarios <- c("rcp45", "rcp85")
+
 #### RCP8.5 Projections
 rf_mod <- readRDS("./rf_mod.RDS")
 
