@@ -35,7 +35,7 @@ soil_water_spring <- rast("./data/summary_layers/soil_water/historical/V_1_5_spr
 soil_water_summer <- rast("./data/summary_layers/soil_water/historical/V_1_5_summer_gridmet_historical_soil_water_2000_2019_summer_means_cropped_units_mm.tif")
 soil_water_fall <- rast("./data/summary_layers/soil_water/historical/V_1_5_fall_gridmet_historical_soil_water_2000_2019_fall_means_cropped_units_mm.tif")
 
-soil_whc <- rast(".data/soil_whc_conus_1km.tif")
+soil_whc <- rast("./data/soil_whc_conus_1km.tif")
 
 nlcd <- rast("./data/nlcd_resampled_1km_2019.tif")
 
