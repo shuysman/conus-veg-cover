@@ -96,7 +96,7 @@ rf_mod <- ranger(nlcd ~ .,
                  probability = TRUE,
                  importance = "impurity",
                  write.forest = TRUE,
-                 num.threads = 12)
+                 num.threads = 64)
 summary(rf_mod)
 
 importance(rf_mod)
