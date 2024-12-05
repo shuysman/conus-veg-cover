@@ -72,11 +72,13 @@ pred85_cover_expanse <- expanse(subset(stack, c(3,4)), unit = "km", byValue = TR
 pred45_cover_expanse <- bind_rows(
   select(current_cover_expanse, Class, area, period),
   select(pred45_cover_expanse, Class, area, period)
-)
+) %>%
+  mutate(period = factor(period, levels = c("current", "Mid-century", "End-century")))
 pred85_cover_expanse <- bind_rows(
   select(current_cover_expanse, Class, area, period),
   select(pred85_cover_expanse, Class, area, period)
-)
+) %>%
+  mutate(period = factor(period, levels = c("current", "Mid-century", "End-century")))
 
 ggplot() +
   geom_line(pred45_cover_expanse, mapping = aes(x = period, y = area, color = Class, group = Class), lwd = 2) +
