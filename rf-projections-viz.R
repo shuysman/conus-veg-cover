@@ -73,17 +73,35 @@ pred45_cover_expanse <- bind_rows(
   select(current_cover_expanse, Class, area, period),
   select(pred45_cover_expanse, Class, area, period)
 ) %>%
-  mutate(period = factor(period, levels = c("current", "Mid-century", "End-century")))
+  mutate(period = factor(period, levels = c("current", "Mid-century", "End-century")),
+         Class = factor(Class, levels = c("Perennial Ice/Snow",
+                                          "Barren Land (Rock/Sand/Clay)",
+                                          "Deciduous Forest",
+                                          "Evergreen Forest",
+                                          "Mixed Forest",
+                                          "Shrub/Scrub",
+                                          "Grassland/Herbaceous",
+                                          "Woody Wetlands",
+                                          "Emergent Herbaceous Wetlands")))
 pred85_cover_expanse <- bind_rows(
   select(current_cover_expanse, Class, area, period),
   select(pred85_cover_expanse, Class, area, period)
 ) %>%
-  mutate(period = factor(period, levels = c("current", "Mid-century", "End-century")))
+  mutate(period = factor(period, levels = c("current", "Mid-century", "End-century")),
+         Class = factor(Class, levels = c("Perennial Ice/Snow",
+                                          "Barren Land (Rock/Sand/Clay)",
+                                          "Deciduous Forest",
+                                          "Evergreen Forest",
+                                          "Mixed Forest",
+                                          "Shrub/Scrub",
+                                          "Grassland/Herbaceous",
+                                          "Woody Wetlands",
+                                          "Emergent Herbaceous Wetlands")))
 
 ggplot() +
   geom_line(pred45_cover_expanse, mapping = aes(x = period, y = area, color = Class, group = Class), lwd = 2) +
   geom_line(pred85_cover_expanse, mapping = aes(x = period, y = area, color = Class, group = Class), linetype = 2, lwd = 2) +
-  #scale_color_manual(values = cols_pred$Color) +
+  scale_color_manual(values = cols_pred$Color) +
   labs(title = "Projected change in area of cover types",
        subtitle = "Solid = RCP4.5, Dashed = RCP8.5") +
   theme_bw()
