@@ -25,7 +25,7 @@ names(stack) <- c("Mid-century RCP4.5",
 cols_current_cover <- dplyr::filter(pal_nlcd(), ID %in% as.numeric(levels(factor(values(current_cover, na.rm = TRUE, mat = FALSE)))))
 
 
-bbox <- extend(current_cover, c(100, 0))
+bbox <- extend(current_cover, c(100, 0)) ### Hack to make basemap extent bigger
 
 basemap <- basemap_terra(bbox, map_service = "carto", map_type = "light_no_labels", map_res = 1)
 
