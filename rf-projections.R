@@ -108,8 +108,8 @@ for (scenario in scenarios) {
     pred <- make_projection(period$start_year, period$end_year, scenario)
 
     filename <- glue("predicted-cover_{period$start_year}-{period$end_year}_{scenario}")
-    writeRaster(pred, glue(filename, ".tif"))
-    saveRDS(pred, glue(filename, ".RDS"))
+    writeRaster(pred, glue(filename, ".tif"), overwrite = TRUE)
+    saveRDS(pred, glue(filename, ".RDS"), overwrite = TRUE)
   }
 }
 
