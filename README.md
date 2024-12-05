@@ -12,3 +12,17 @@ Fit random forest models using `ranger` to model current US land cover types.
 - `viz_veg_dist.R`: Visualizations of vegetation cover type distributions vs historical water balance variables.
 - `randomforest.R`: fit a random forest model to the data.  The associated `sbatch` file can be used to run the script in a `SLURM` environment.
 - `rf-projections.R`: Use the random forest model to predict future changes in vegetation cover using ensemble water balance projections for RCP 4.5 and RCP8.5 scenarios.
+
+## Tempest usage
+
+- Create a `conda` environment `conus-cover` using the `mamba.yml` file.
+```
+mamba env create -f mamba.yml
+```
+
+- Install the R package `tidyterra` in this environment manually, as it is not available in `conda-forge`.
+```
+mamba activate conus-cover
+R
+install.packages("tidyterra")
+```
