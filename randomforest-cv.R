@@ -95,8 +95,6 @@ tgrid <- expand.grid(
   .splitrule = "gini"
 )
 
-Only these three are supported by caret and not the number of trees. In train you can specify num.trees and importance:
-
 model_caret <- train(nlcd  ~ ., data = data,
                      method = "ranger",
                      trControl = trainControl(method="cv", number = 5, verboseIter = T, classProbs = T),
