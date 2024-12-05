@@ -20,17 +20,17 @@ pet_fall <- rast("./data/summary_layers/PET/historical/V_1_5_fall_gridmet_histor
 
 accumswe <- rast("./data/summary_layers/accumswe/historical/V_1_5_annual_gridmet_historical_accumswe_2000_2019_annual_means_cropped_units_mm.tif")
 
-rain_winter <- rast("./data/summary_layers/rain/historical/V_1_5_annual_gridmet_historical_rain_2000_2019_annual_means_cropped_units_mm.tif")
+rain_winter <- rast("./data/summary_layers/rain/historical/V_1_5_winter_gridmet_historical_rain_2000_2019_winter_means_cropped_units_mm.tif")
 rain_spring <- rast("./data/summary_layers/rain/historical/V_1_5_spring_gridmet_historical_rain_2000_2019_spring_means_cropped_units_mm.tif")
 rain_summer <- rast("./data/summary_layers/rain/historical/V_1_5_summer_gridmet_historical_rain_2000_2019_summer_means_cropped_units_mm.tif")
 rain_fall <- rast("./data/summary_layers/rain/historical/V_1_5_fall_gridmet_historical_rain_2000_2019_fall_means_cropped_units_mm.tif")
 
-runoff_winter <- rast("./data/summary_layers/runoff/historical/V_1_5_annual_gridmet_historical_runoff_2000_2019_annual_means_cropped_units_mm.tif")
+runoff_winter <- rast("./data/summary_layers/runoff/historical/V_1_5_winter_gridmet_historical_runoff_2000_2019_winter_means_cropped_units_mm.tif")
 runoff_spring <- rast("./data/summary_layers/runoff/historical/V_1_5_spring_gridmet_historical_runoff_2000_2019_spring_means_cropped_units_mm.tif")
 runoff_summer <- rast("./data/summary_layers/runoff/historical/V_1_5_summer_gridmet_historical_runoff_2000_2019_summer_means_cropped_units_mm.tif")
 runoff_fall <- rast("./data/summary_layers/runoff/historical/V_1_5_fall_gridmet_historical_runoff_2000_2019_fall_means_cropped_units_mm.tif")
 
-soil_water_winter <- rast("./data/summary_layers/soil_water/historical/V_1_5_annual_gridmet_historical_soil_water_2000_2019_annual_means_cropped_units_mm.tif")
+soil_water_winter <- rast("./data/summary_layers/soil_water/historical/V_1_5_winter_gridmet_historical_soil_water_2000_2019_winter_means_cropped_units_mm.tif")
 soil_water_spring <- rast("./data/summary_layers/soil_water/historical/V_1_5_spring_gridmet_historical_soil_water_2000_2019_spring_means_cropped_units_mm.tif")
 soil_water_summer <- rast("./data/summary_layers/soil_water/historical/V_1_5_summer_gridmet_historical_soil_water_2000_2019_summer_means_cropped_units_mm.tif")
 soil_water_fall <- rast("./data/summary_layers/soil_water/historical/V_1_5_fall_gridmet_historical_soil_water_2000_2019_fall_means_cropped_units_mm.tif")
