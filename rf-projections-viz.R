@@ -32,7 +32,8 @@ basemap <- basemap_terra(bbox, map_service = "carto", map_type = "light_no_label
 ggplot() +
   geom_spatraster_rgb(data = basemap) +
   geom_spatraster(data = current_cover) +
-  scale_fill_manual(values = cols_current_cover$Color, na.value = NA)
+  scale_fill_manual(values = cols_current_cover$Color, na.value = NA) +
+  ggtitle("Current CONUS Cover Types")
 
 cols_pred <- dplyr::filter(pal_nlcd(), ID %in% as.numeric(levels(pred_mid_85)[[1]]$class))
 
@@ -40,4 +41,5 @@ ggplot() +
   geom_spatraster_rgb(data = basemap) +
   geom_spatraster(data = stack) +
   facet_wrap(~lyr) +
-  scale_fill_manual(values = cols_pred$Color, na.value = NA)
+  scale_fill_manual(values = cols_pred$Color, na.value = NA) +
+  ggtitle("Projected CONUS Cover Types")
