@@ -4,6 +4,8 @@ library(tidyterra)
 library(FedData)
 library(basemaps)
 
+terraOptions(verbose = TRUE)
+
 mask_ids <- c(11, 21, 22, 23, 24, 81, 82)
 nlcd_2019 <- rast("./data/nlcd_resampled_1km_2019.tif")
 dev_mask <- filter(nlcd_2019, values(nlcd_2019) %in% mask_ids)
@@ -22,18 +24,21 @@ names(stack) <- c("Mid-century RCP4.5",
                   "Mid-century RCP8.5",
                   "End-century RCP8.5")
 
-cols_current_cover <- dplyr::filter(pal_nlcd(), ID %in% as.numeric(levels(factor(values(current_cover, na.rm = TRUE, mat = FALSE)))))
 
+### Current and projected cover map
 
 bbox <- extend(current_cover, c(100, 0)) ### Hack to make basemap extent bigger
 
 basemap <- basemap_terra(bbox, map_service = "carto", map_type = "light_no_labels", map_res = 1)
+
+cols_current_cover <- dplyr::filter(pal_nlcd(), ID %in% as.numeric(levels(factor(values(current_cover, na.rm = TRUE, mat = FALSE)))))
 
 ggplot() +
   geom_spatraster_rgb(data = basemap) +
   geom_spatraster(data = current_cover) +
   scale_fill_manual(values = cols_current_cover$Color, na.value = NA) +
   ggtitle("Current CONUS Cover Types")
+ggsave("img/conus_current_veg_cover.png", width = 12, height = 8)
 
 cols_pred <- dplyr::filter(pal_nlcd(), ID %in% as.numeric(levels(pred_mid_85)[[1]]$class))
 
@@ -43,3 +48,41 @@ ggplot() +
   facet_wrap(~lyr) +
   scale_fill_manual(values = cols_pred$Color, na.value = NA) +
   ggtitle("Projected CONUS Cover Types")
+ggsave("img/conus_projected_veg_cover.png", width = 12, height = 10)
+
+
+#### Areal statistics analysis
+
+current_cover_expanse <- expanse(current_cover, unit = "km", byValue = TRUE) %>%
+  rename(Class = value) %>%
+  mutate(period = "current")
+
+pred45_cover_expanse <- expanse(subset(stack, c(1,2)), unit = "km", byValue = TRUE) %>%
+  mutate(value = as.numeric(value), ## Value is typed as chr so needed for left_join() below
+         period = case_match(layer, ## Rename layers to something meaningful
+                             1 ~ "Mid-century",
+                             2 ~ "End-century")) %>%
+  left_join(select(pal_nlcd(), ID, Class), by = join_by(value == ID))
+pred85_cover_expanse <- expanse(subset(stack, c(3,4)), unit = "km", byValue = TRUE) %>%
+  mutate(value = as.numeric(value), ## Value is typed as chr so needed for left_join() below
+         period = case_match(layer, ## Rename layers to something meaningful
+                             1 ~ "Mid-century",
+                             2 ~ "End-century")) %>%
+  left_join(select(pal_nlcd(), ID, Class), by = join_by(value == ID))
+pred45_cover_expanse <- bind_rows(
+  select(current_cover_expanse, Class, area, period),
+  select(pred45_cover_expanse, Class, area, period)
+)
+pred85_cover_expanse <- bind_rows(
+  select(current_cover_expanse, Class, area, period),
+  select(pred85_cover_expanse, Class, area, period)
+)
+
+ggplot() +
+  geom_line(pred45_cover_expanse, mapping = aes(x = period, y = area, color = Class, group = Class), lwd = 2) +
+  geom_line(pred85_cover_expanse, mapping = aes(x = period, y = area, color = Class, group = Class), linetype = 2, lwd = 2) +
+  #scale_color_manual(values = cols_pred$Color) +
+  labs(title = "Projected change in area of cover types",
+       subtitle = "Solid = RCP4.5, Dashed = RCP8.5") +
+  theme_bw()
+ggsave("img/projected_cover_change.png", width = 14, height = 8)
