@@ -105,7 +105,7 @@ importance(rf_mod)
 
 print(rf_mod$confusion.matrix)
 
-saveRDS(rf_mod, file = "rf_mod.RDS", compress = TRUE)
+saveRDS(rf_mod, file = "rf_mod.RDS", compress = TRUE, overwrite = TRUE)
 
 
 ###library(pROC)
