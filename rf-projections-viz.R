@@ -37,7 +37,7 @@ ggplot() +
   geom_spatraster_rgb(data = basemap) +
   geom_spatraster(data = current_cover) +
   scale_fill_manual(values = cols_current_cover$Color, na.value = NA) +
-  ggtitle("Current CONUS Cover Types") +
+  ggtitle("Current CONUS Cover Types on non-developed land") +
   lims(x = c(-14055200, -7318387), y = c(2852744,  6401999)) +
   coord_sf(expand = FALSE) +
   theme_bw() 
