@@ -8,10 +8,10 @@ library(ggalt)
 
 set.seed(255)
 
-aet_annual <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_layers/AET/historical/V_1_5_annual_gridmet_historical_AET_1980_1999_annual_means_cropped_units_mm.tif")
-cwd_annual <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_layers/Deficit/historical/V_1_5_annual_gridmet_historical_Deficit_1980_1999_annual_means_cropped_units_mm.tif")
+aet_annual <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_layers/AET/historical/V_1_5_annual_gridmet_historical_AET_2000_2019_annual_means_cropped_units_mm.tif")
+cwd_annual <- rast("/media/smithers/shuysman/data/nps_gridded_wb/summary_layers/Deficit/historical/V_1_5_annual_gridmet_historical_Deficit_2000_2019_annual_means_cropped_units_mm.tif")
 
-nlcd <- rast("./nlcd_resampled_1km_1985.tif")
+nlcd <- rast("./data/nlcd_resampled_1km_2019.tif")
 
 stack <- c(aet_annual, cwd_annual, nlcd)
 

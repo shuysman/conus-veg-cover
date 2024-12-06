@@ -37,7 +37,10 @@ ggplot() +
   geom_spatraster_rgb(data = basemap) +
   geom_spatraster(data = current_cover) +
   scale_fill_manual(values = cols_current_cover$Color, na.value = NA) +
-  ggtitle("Current CONUS Cover Types")
+  ggtitle("Current CONUS Cover Types") +
+  lims(x = c(-14055200, -7318387), y = c(2852744,  6401999)) +
+  coord_sf(expand = FALSE) +
+  theme_bw() 
 ggsave("img/conus_current_veg_cover.png", width = 12, height = 8)
 
 cols_pred <- dplyr::filter(pal_nlcd(), ID %in% as.numeric(levels(pred_mid_85)[[1]]$class))
@@ -46,9 +49,12 @@ ggplot() +
   geom_spatraster_rgb(data = basemap) +
   geom_spatraster(data = stack) +
   facet_wrap(~lyr) +
-  scale_fill_manual(values = cols_pred$Color, na.value = NA) +
-  ggtitle("Projected CONUS Cover Types")
-ggsave("img/conus_projected_veg_cover.png", width = 12, height = 10)
+  scale_fill_manual(values = cols_pred$Color, na.value = NA, labels = cols_pred$Class) +
+  ggtitle("Projected CONUS Cover Types") +
+  lims(x = c(-14055200, -7318387), y = c(2852744,  6401999)) +
+  coord_sf(expand = FALSE) +
+  theme_bw()
+ggsave("img/conus_projected_veg_cover.png", width = 18, height = 10)
 
 
 #### Areal statistics analysis
@@ -103,6 +109,8 @@ ggplot() +
   geom_line(pred85_cover_expanse, mapping = aes(x = period, y = area, color = Class, group = Class), linetype = 2, lwd = 2) +
   scale_color_manual(values = cols_pred$Color) +
   labs(title = "Projected change in area of cover types",
-       subtitle = "Solid = RCP4.5, Dashed = RCP8.5") +
+       subtitle = "Solid = RCP4.5, Dashed = RCP8.5",
+       x = "Time Period",
+       y = "Area (km²)") +
   theme_bw()
-ggsave("img/projected_cover_change.png", width = 14, height = 8)
+ggsave("img/projected_cover_change.png", width = 8, height = 5)
