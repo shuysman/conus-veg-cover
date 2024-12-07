@@ -1,4 +1,5 @@
 # Predicting Major Vegetation Types for CONUS using the Climatic Water Balance
+**CSCI550 Fall 2024 Final Project**
 
 Fit random forest models using `ranger` to model current US land cover types. 
 
